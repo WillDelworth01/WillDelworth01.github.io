@@ -1,5 +1,416 @@
 <!DOCTYPE html>
-<html>
-<head><title>Will Delworth</title></head>
-<body><h1>It works.</h1></body>
+<html lang="en" data-bs-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Will Delworth | Electrical Engineer</title>
+
+  <!-- ============ NON-TECHNICAL REQ: Bootstrap CSS framework (CDN) ============ -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#F6F8FB; --surface:#FFFFFF; --ink:#0E1726; --muted:#5B6675;
+      --accent:#1F5FD0; --accent-2:#11C0D6; --border:#E2E8F0;
+    }
+    [data-bs-theme="dark"]{
+      --bg:#0B1220; --surface:#121C2E; --ink:#E7EDF6; --muted:#9AA7B8;
+      --accent:#5B8DEF; --accent-2:#22D3EE; --border:#1E2A3D;
+    }
+    body{background:var(--bg); color:var(--ink); font-family:'Inter',sans-serif;}
+    h1,h2,h3,h4,.display-font{font-family:'Space Grotesk',sans-serif; letter-spacing:-0.01em;}
+    .mono{font-family:'JetBrains Mono',monospace;}
+    .text-muted-c{color:var(--muted)!important;}
+    .accent{color:var(--accent);}
+    a{color:var(--accent); text-decoration:none;}
+    a:hover{text-decoration:underline;}
+
+    .navbar{background:var(--surface)!important; border-bottom:1px solid var(--border);}
+    .navbar .nav-link{color:var(--ink)!important; font-weight:500;}
+    .navbar .nav-link:hover{color:var(--accent)!important;}
+
+    .eyebrow{font-family:'JetBrains Mono',monospace; font-size:.72rem; letter-spacing:.18em;
+             text-transform:uppercase; color:var(--accent);}
+
+    .hero{padding:5rem 0 3rem;}
+    .headshot{width:170px; height:170px; object-fit:cover; border-radius:50%;
+              border:3px solid var(--surface); box-shadow:0 10px 30px rgba(15,23,42,.15);}
+    .typed-line{min-height:2.2rem; color:var(--muted); font-weight:500;}
+
+    .card-c{background:var(--surface); border:1px solid var(--border); border-radius:14px;}
+    .section{padding:3rem 0;}
+    .section-num{font-family:'JetBrains Mono',monospace; color:var(--accent-2);
+                 font-size:.8rem; margin-right:.5rem;}
+
+    .xp-item{border-left:2px solid var(--border); padding:0 0 1.6rem 1.4rem; position:relative;}
+    .xp-item::before{content:''; position:absolute; left:-7px; top:.3rem; width:12px; height:12px;
+                     border-radius:50%; background:var(--accent); border:2px solid var(--surface);}
+    .xp-item:last-child{border-left-color:transparent;}
+
+    .skill-badge{background:var(--surface); border:1px solid var(--border); color:var(--ink);
+                 border-radius:999px; padding:.4rem .9rem; font-size:.85rem; font-weight:500;
+                 display:inline-block; margin:.25rem;}
+
+    .demo-box{background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:1.5rem; height:100%;}
+    #analogClock{background:transparent;}
+    .clock-digital{font-family:'JetBrains Mono',monospace; font-size:1.8rem; font-weight:600; color:var(--accent);}
+    .src-note{font-size:.72rem; color:var(--muted);}
+    .disclaimer{background:rgba(31,95,208,.08); border:1px solid var(--border); border-radius:10px;
+                padding:.75rem 1rem; font-size:.8rem; color:var(--muted);}
+
+    .cookie-banner{background:var(--accent); color:#fff; font-size:.9rem;}
+    .btn-accent{background:var(--accent); border-color:var(--accent); color:#fff; font-weight:600;}
+    .btn-accent:hover{filter:brightness(.92); color:#fff;}
+
+    footer{border-top:1px solid var(--border); color:var(--muted);}
+    @media (prefers-reduced-motion: reduce){*{animation:none!important; transition:none!important;}}
+  </style>
+</head>
+<body>
+
+  <!-- ============ TECHNICAL REQ: JS COOKIES welcome / welcome-back banner ============ -->
+  <div id="cookieBanner" class="cookie-banner text-center py-2 d-none"></div>
+
+  <!-- Navbar (Bootstrap) -->
+  <nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
+      <a class="navbar-brand display-font fw-bold" href="#top">Will Delworth</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#experience">Experience</a></li>
+          <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+          <li class="nav-item"><a class="nav-link" href="#demos">Live Demos</a></li>
+          <li class="nav-item"><a class="nav-link" href="waph.html">WAPH Course</a></li>
+          <li class="nav-item ms-lg-2"><a class="btn btn-accent btn-sm" href="resume.pdf" target="_blank">Resume (PDF)</a></li>
+          <!-- TECHNICAL REQ: "one more functionality" light/dark theme toggle (jQuery) -->
+          <li class="nav-item ms-lg-2">
+            <button id="themeToggle" class="btn btn-outline-secondary btn-sm" title="Toggle theme">Dark</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <a id="top"></a>
+
+  <!-- ============ GENERAL REQ: name, headshot, contact ============ -->
+  <header class="hero">
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-md-3 text-center">
+          <!-- Upload your photo to the repo root as headshot.jpg (falls back to a placeholder if missing) -->
+          <img class="headshot" src="headshot.jpg" alt="Will Delworth headshot"
+               onerror="this.src='https://placehold.co/170x170?text=Headshot'">
+        </div>
+        <div class="col-md-9">
+          <div class="eyebrow mb-2">Electrical Engineering &middot; University of Cincinnati</div>
+          <h1 class="display-4 fw-bold mb-2">Will Delworth</h1>
+          <div class="typed-line"><span id="typed"></span></div>
+          <p class="mt-3 mb-3 text-muted-c" style="max-width:640px;">
+            Electrical engineering senior who builds things end to end, from automation scripts
+            and FEA on manufactured parts to a myoelectric training device for pediatric prosthetic
+            patients. Comfortable across hardware, embedded code, and CAD.
+          </p>
+          <div class="d-flex flex-wrap gap-3 align-items-center mono" style="font-size:.9rem;">
+            <span>Cincinnati, OH</span>
+            <!-- TECHNICAL REQ: show/hide email (jQuery) -->
+            <span>Email: <a href="#" id="emailToggle">Show email</a>
+              <span id="emailReveal" class="d-none"><a href="mailto:williamdelworth1@gmail.com">williamdelworth1@gmail.com</a></span>
+            </span>
+            <span><a href="https://github.com/WillDelworth01" target="_blank">github.com/WillDelworth01</a></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ABOUT / EDUCATION -->
+  <section class="section" id="about">
+    <div class="container">
+      <h2 class="h3 mb-4"><span class="section-num">01</span>Education</h2>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="card-c p-4 h-100">
+            <h3 class="h5 mb-1">University of Cincinnati</h3>
+            <div class="text-muted-c mb-2">B.S. Electrical Engineering &middot; Class of 2026</div>
+            <div class="mono small text-muted-c">Cincinnati, OH</div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card-c p-4 h-100">
+            <h3 class="h5 mb-1">Summit Country Day</h3>
+            <div class="text-muted-c mb-2">High School Diploma &middot; May 2020</div>
+            <div class="mono small text-muted-c">Cincinnati, OH</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE + ACTIVITIES -->
+  <section class="section" id="experience">
+    <div class="container">
+      <h2 class="h3 mb-4"><span class="section-num">02</span>Experience</h2>
+
+      <div class="xp-item">
+        <div class="d-flex justify-content-between flex-wrap">
+          <h3 class="h5 mb-0">Engineering Design and Manufacturing Intern</h3>
+          <span class="mono small text-muted-c">Summer 2023, Spring/Fall 2024</span>
+        </div>
+        <div class="accent mb-2">Vixiv Technologies &middot; Cincinnati, OH</div>
+        <ul class="text-muted-c mb-0">
+          <li>Wrote automation scripts across the manufacturing pipeline that eliminated 100+ hours of work, using Python, JavaScript, and nTop.</li>
+          <li>Led and supported design on multiple projects in Fusion 360 CAD, including consulting work.</li>
+          <li>Ran finite element analysis on components to verify design compliance, and supported titanium and nylon 3D printing processes.</li>
+        </ul>
+      </div>
+
+      <div class="xp-item">
+        <div class="d-flex justify-content-between flex-wrap">
+          <h3 class="h5 mb-0">Landscaping Associate</h3>
+          <span class="mono small text-muted-c">Summer 2022</span>
+        </div>
+        <div class="accent">Lamond Design &middot; Cincinnati, OH</div>
+      </div>
+
+      <div class="xp-item">
+        <div class="d-flex justify-content-between flex-wrap">
+          <h3 class="h5 mb-0">Personal Caddie</h3>
+          <span class="mono small text-muted-c">2016 to 2020</span>
+        </div>
+        <div class="accent">Maketewah Country Club &middot; Cincinnati, OH</div>
+      </div>
+
+      <h2 class="h3 mb-4 mt-5"><span class="section-num">03</span>Projects and Activities</h2>
+
+      <div class="xp-item">
+        <div class="d-flex justify-content-between flex-wrap">
+          <h3 class="h5 mb-0">Prosthetic Training Platform</h3>
+          <span class="mono small text-muted-c">Spring 2026</span>
+        </div>
+        <ul class="text-muted-c mb-0">
+          <li>Designed a myoelectric controlled toy car that helps pediatric prosthetic patients learn myoelectric control before receiving an upper limb prosthetic.</li>
+          <li>Built to lower the training commitment and barrier to adopting a prosthetic.</li>
+        </ul>
+      </div>
+
+      <div class="xp-item">
+        <div class="d-flex justify-content-between flex-wrap">
+          <h3 class="h5 mb-0">Volunteer &middot; May We Help</h3>
+          <span class="mono small text-muted-c">2025 to Current</span>
+        </div>
+        <ul class="text-muted-c mb-0">
+          <li>Design and build custom engineering solutions for individuals with special needs.</li>
+          <li>Led and assisted on multiple device projects.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS + AWARDS -->
+  <section class="section" id="skills">
+    <div class="container">
+      <h2 class="h3 mb-4"><span class="section-num">04</span>Skills</h2>
+      <div class="mb-4">
+        <span class="skill-badge">C++</span><span class="skill-badge">Python</span>
+        <span class="skill-badge">MATLAB</span><span class="skill-badge">Electronics</span>
+        <span class="skill-badge">Fusion 360 (CAD)</span><span class="skill-badge">nTop</span>
+        <span class="skill-badge">3D Printing</span><span class="skill-badge">Finite Element Analysis</span>
+      </div>
+      <h2 class="h3 mb-3 mt-4"><span class="section-num">05</span>Awards</h2>
+      <ul class="text-muted-c">
+        <li>Dean's List: Spring, Summer, Fall 2025 and Spring 2026</li>
+        <li>Regional Scholastic Golden Key Winner &middot; Cincinnati, OH, 2019</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ LIVE DEMOS: clocks + both Web APIs ============ -->
+  <section class="section" id="demos">
+    <div class="container">
+      <h2 class="h3 mb-2"><span class="section-num">06</span>Live Demos</h2>
+      <p class="text-muted-c mb-3">Interactive JavaScript built for the WAPH course.
+         <a href="waph.html">Read about the course</a></p>
+
+      <!-- ============ TECHNICAL REQ: third-party content disclaimer ============ -->
+      <div class="disclaimer mb-4">
+        Disclaimer: The jokes and images below are generated by third party public services
+        (JokeAPI and the Dog CEO API). I do not create this content and I am not responsible for it.
+      </div>
+
+      <div class="row g-4">
+
+        <!-- Digital + Analog clock -->
+        <div class="col-md-6">
+          <div class="demo-box text-center">
+            <div class="eyebrow mb-2">Clocks (JavaScript)</div>
+            <canvas id="analogClock" width="150" height="150"></canvas>
+            <div class="clock-digital mt-2" id="digitalClock">--:--:--</div>
+          </div>
+        </div>
+
+        <!-- TECHNICAL REQ: Web API #1 jokeAPI, new joke every 1 minute -->
+        <div class="col-md-6">
+          <div class="demo-box">
+            <div class="eyebrow mb-2">Joke of the Minute (Web API #1)</div>
+            <p id="jokeText" class="mb-2">Loading a joke...</p>
+            <button id="jokeBtn" class="btn btn-outline-secondary btn-sm">New joke now</button>
+            <div class="src-note mt-3">Source: JokeAPI (v2.jokeapi.dev), shown in safe mode.</div>
+          </div>
+        </div>
+
+        <!-- TECHNICAL REQ: Web API #2 graphic API (Dog CEO) -->
+        <div class="col-md-6">
+          <div class="demo-box text-center">
+            <div class="eyebrow mb-2">Random Dog (Web API #2, graphic)</div>
+            <img id="dogImg" src="" alt="A random dog"
+                 style="max-width:100%; max-height:240px; border-radius:10px; object-fit:cover;">
+            <div><button id="dogBtn" class="btn btn-outline-secondary btn-sm mt-3">Another dog</button></div>
+            <div class="src-note mt-2">Source: Dog CEO API (dog.ceo).</div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="demo-box">
+            <div class="eyebrow mb-2">Visitor Counter</div>
+            <!-- ============ NON-TECHNICAL REQ: page tracker ============
+                 Go to https://flagcounter.com, customize a counter, copy the HTML it gives you,
+                 and paste it in place of the line below. -->
+            <a href="https://info.flagcounter.com/7DVG"><img src="https://s01.flagcounter.com/count2/7DVG/bg_FFFFFF/txt_000000/border_CCCCCC/columns_2/maxflags_10/viewers_0/labels_0/pageviews_0/flags_0/percent_0/" alt="Flag Counter" border="0"></a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <footer class="py-4 text-center">
+    <div class="container">
+      <p class="mb-1 small">Copyright 2026 Will Delworth &middot; Built for WAPH (Web Application Programming and Hacking)</p>
+      <p class="mb-0 small"><a href="https://github.com/WillDelworth01" target="_blank">GitHub</a></p>
+    </div>
+  </footer>
+
+  <!-- ============ TECH REQ: jQuery (CDN) ============ -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <!-- ============ TECHNICAL REQ: second open source library Typed.js (CDN) ============ -->
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.1.0/dist/typed.umd.js"></script>
+  <!-- Bootstrap JS bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+  // ---------- Typed.js animated headline (second JS library) ----------
+  new Typed('#typed', {
+    strings: ['Electrical Engineer.', 'CAD and FEA.', 'Embedded systems and prototyping.', 'Builder of useful things.'],
+    typeSpeed: 45, backSpeed: 25, backDelay: 1400, loop: true
+  });
+
+  // ---------- jQuery: show/hide email ----------
+  $('#emailToggle').on('click', function(e){
+    e.preventDefault();
+    $('#emailReveal').toggleClass('d-none');
+    $(this).text($('#emailReveal').hasClass('d-none') ? 'Show email' : 'Hide email');
+  });
+
+  // ---------- jQuery: light/dark theme toggle (extra functionality) ----------
+  $('#themeToggle').on('click', function(){
+    var html = $('html');
+    var dark = html.attr('data-bs-theme') === 'dark';
+    html.attr('data-bs-theme', dark ? 'light' : 'dark');
+    $(this).text(dark ? 'Dark' : 'Light');
+  });
+
+  // ---------- Digital clock ----------
+  function tickDigital(){
+    var d = new Date();
+    var s = d.toLocaleTimeString('en-US', {hour12:false});
+    document.getElementById('digitalClock').textContent = s;
+  }
+  setInterval(tickDigital, 1000); tickDigital();
+
+  // ---------- Analog clock (canvas) ----------
+  (function(){
+    var canvas = document.getElementById('analogClock');
+    var ctx = canvas.getContext('2d');
+    var r = canvas.height/2;
+    ctx.translate(r, r);
+    r = r * 0.9;
+    function accent(){ return getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#1F5FD0'; }
+    function ink(){ return getComputedStyle(document.documentElement).getPropertyValue('--ink').trim() || '#0E1726'; }
+    function draw(){
+      ctx.clearRect(-canvas.width, -canvas.height, canvas.width*2, canvas.height*2);
+      ctx.beginPath(); ctx.arc(0,0,r,0,2*Math.PI);
+      ctx.lineWidth = 2; ctx.strokeStyle = accent(); ctx.stroke();
+      for(var i=0;i<12;i++){
+        var ang = i*Math.PI/6;
+        ctx.beginPath();
+        ctx.moveTo(Math.sin(ang)*r*0.85, -Math.cos(ang)*r*0.85);
+        ctx.lineTo(Math.sin(ang)*r*0.95, -Math.cos(ang)*r*0.95);
+        ctx.lineWidth = 2; ctx.strokeStyle = ink(); ctx.stroke();
+      }
+      var now = new Date();
+      var h = now.getHours()%12, m = now.getMinutes(), s = now.getSeconds();
+      drawHand((h*30 + m*0.5)*Math.PI/180, r*0.5, 4, ink());
+      drawHand((m*6)*Math.PI/180, r*0.75, 3, ink());
+      drawHand((s*6)*Math.PI/180, r*0.85, 1.5, accent());
+    }
+    function drawHand(pos, len, width, color){
+      ctx.beginPath(); ctx.lineWidth=width; ctx.lineCap='round'; ctx.strokeStyle=color;
+      ctx.moveTo(0,0); ctx.lineTo(len*Math.sin(pos), -len*Math.cos(pos)); ctx.stroke();
+    }
+    setInterval(draw, 1000); draw();
+  })();
+
+  // ---------- Web API #1: JokeAPI, refreshes every 60s ----------
+  function loadJoke(){
+    $.getJSON('https://v2.jokeapi.dev/joke/Any?safe-mode', function(data){
+      if(data.type === 'single'){
+        $('#jokeText').text(data.joke);
+      } else if(data.type === 'twopart'){
+        $('#jokeText').html(data.setup + '<br><em>' + data.delivery + '</em>');
+      } else {
+        $('#jokeText').text('Could not load a joke right now.');
+      }
+    }).fail(function(){ $('#jokeText').text('Could not reach the joke service.'); });
+  }
+  loadJoke();
+  setInterval(loadJoke, 60000);            // new joke every 1 minute
+  $('#jokeBtn').on('click', loadJoke);
+
+  // ---------- Web API #2: Dog CEO random image ----------
+  function loadDog(){
+    fetch('https://dog.ceo/api/breeds/image/random')
+      .then(function(r){ return r.json(); })
+      .then(function(d){ document.getElementById('dogImg').src = d.message; })
+      .catch(function(){ /* leave previous image */ });
+  }
+  loadDog();
+  $('#dogBtn').on('click', loadDog);
+
+  // ---------- JS Cookies: welcome / welcome-back ----------
+  (function(){
+    var banner = document.getElementById('cookieBanner');
+    var last = document.cookie.split('; ').find(function(c){ return c.indexOf('lastVisit=') === 0; });
+    if(last){
+      var when = decodeURIComponent(last.split('=')[1]);
+      banner.textContent = 'Welcome back! Your last visit was ' + when;
+    } else {
+      banner.textContent = 'Welcome to my homepage for the first time!';
+    }
+    banner.classList.remove('d-none');
+    // update the last-visit value on every visit (expires in 1 year)
+    var now = new Date().toLocaleString('en-US');
+    document.cookie = 'lastVisit=' + encodeURIComponent(now) + '; max-age=' + (60*60*24*365) + '; path=/';
+  })();
+  </script>
+</body>
 </html>
